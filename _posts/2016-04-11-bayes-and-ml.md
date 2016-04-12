@@ -2,12 +2,11 @@
 title: Machine Learning and the Bayes Error Rate
 ---
 
-I was introduced to the "[Newsvendor model](https://en.wikipedia.org/wiki/Newsvendor_model)" during a business school class today, which can be thought of as a problem in Bayesian statistics. (N.B., the "Price is Right" secton of Cam David-Pilson's [*Bayesian Methods for Hackers*](http://nbviewer.jupyter.org/github/CamDavidsonPilon/Probabilistic-Programming-and-Bayesian-Methods-for-Hackers/blob/master/Chapter5_LossFunctions/Chapter5.ipynb) is a fun and thorough read on loss functions in Bayesian models.) During class, I thought to myself that if it were my job to predict demand for newspapers, snow jackets, or whatever, then I'd probably have a simple machine learning regressor as my starting point rather than making distributional assumptions, as the Newsvendor model does. My next thought, though, was: **Of course, when you actually know the underlying distribution, then a Bayesian approach should perform better than "blind" ML.** Knowing the distribution gives you an predictive edge by constraining your search space substantially. This made me think a bit about how much prediction advantage is created by knowing the response variable's distribution.
+I was introduced to the "[Newsvendor model](https://en.wikipedia.org/wiki/Newsvendor_model)" during a business school class today, which can be thought of as the solution to a problem in Bayesian statistics. (N.B., the "Price is Right" secton of Cam David-Pilson's [*Bayesian Methods for Hackers*](http://nbviewer.jupyter.org/github/CamDavidsonPilon/Probabilistic-Programming-and-Bayesian-Methods-for-Hackers/blob/master/Chapter5_LossFunctions/Chapter5.ipynb) is a fun and thorough read on loss functions in Bayesian models.)
 
-Here's another way to motivate the problem: Years ago, I remember watching a Khan Academy video in which Sal was teaching statistics. I don't remember the details exactly, but I think the setup was that Sal had some huge population of people, and he wanted to know the average hight. So he generated 30 samples, and then did the usual calculation for our mean estimate and our error. The sample mean, of course, was very close to the true mean, and Sal remarked **how amazing it was that
-we could get so close to the true average hight by just measuring 30 random people**. Another way of phrasing this amazement is: When you know that the height is normally distributed, you only need a few samples to get the mean. That's because so much information is contained in the fact that you know the true probability for heights is normal.
+During class, though, I found myself thinking that if it were my job to predict demand for newspapers, snow jackets, or whatever, then my starting point would probably be a using a simple machine learning regressor, not a statistical model that requires making some distributional assumptions (as the Newsvendor model does). But then I thought: **Of course, if you did actually know the underlying distribution, then a Bayesian approach might perform better than "blind" ML.** Knowing the distribution gives you an predictive edge by constraining your search space substantially. This made me think a bit about how much prediction advantage is created by knowing the response variable's distribution.
 
-In any case, this made me think about how to think about what ML models are doing in situations where we actually know the underlying distribution. This is as philosophical as this post is going to get; to go further, we need some code.
+In any case, this made me think about how to think about what ML models are doing in situations where we actually know the underlying distribution. This is sort of philosophical without details to back it up, so let's write a little code.
 
 # A Little Experiment
 
@@ -40,9 +39,11 @@ df.head()
 
 So, in a typical regression scenario, we'd train using the `sample_*` variables as our predictors and the `true_value` variable as the thing we're trying to predict.
 
-But the catch in this case is that in this case, we have statistics on our side too. We know that `true_value` came from a Gamma(1,1) distribution. This means that we **know** what the best estimator for `true_value` is already. That is, **the best thing our ML model can do is learn to take the average of the three samples**.
+But the catch in this case is that in this case, we have statistics on our side too. We know that `true_value` came from a Gamma(1,1) distribution. This means that we **know** what the best estimator for `true_value` is already. Specifically, let M be the mean of our three samples. Then the distribution for `true_value` is Gamma(1+3M, 4). (We know this because of a [conjugate prior](https://en.wikipedia.org/wiki/Conjugate_prior) relationship.) So the best thing our ML model could do is
+predict the mode of Gamma(1+3M, 4), which is just 3M/4. Let's say that again: **the best thing our ML model can do is learn to take the average of the three samples, and multiply it by 3/4**.
 
-Not only that, though: **We also have a lower bound on the error our model is bound to make**. Specifically, let M be the mean of our three samples. Then the distribution for `true_value` is Gamma(1+3xM, 4). (We know this because of a [conjugate prior](https://en.wikipedia.org/wiki/Conjugate_prior) relationship.) Here's a little code to show that: We'll take all the rows where the samples sum to 10, and show that the `true_value` variable has to follow a Gamma(11, 4) distribution. (Scipy uses a different convention, so you'll see Gamma(11, 1/4) below.)
+
+Here's a little code, by the way, to see that Gamma(1+3M,4) is our posterior: We'll take all the rows where the samples sum to 10, and show that the `true_value` variable has to follow a Gamma(11, 4) distribution. (Scipy uses a different convention, so you'll see Gamma(11, 1/4) below.)
 
 ```
 sns.kdeplot(np.array(df[df.sample_0 + df.sample_1 + df.sample_2 == 10].true_value))
@@ -52,7 +53,7 @@ plt.plot(x,y)
 ```
 ![distro](http://i.imgur.com/sKpalIi.png)
 
-All of this is really interesting, because it means that our posterior distribution is the best we can do: **A perfect regression model can do no better than return the mode of Gamma(1+3M,4) (which is 3M/4) as its prediction.** If you've heard of the [Bayes error rate](https://en.wikipedia.org/wiki/Bayes_error_rate) before, this is what we're running up against. There's nothing more to know about `true_value` from the `sample_*` variables than the mean of the three samples; that's the best we can do. 
+So we already know what the ideal model would do. We know even more though: **We also have a lower bound on the error our model is forced to make**. This is just because knowing the posterior distribution is the best we can do: A perfect regression model can do no better than return the mode of Gamma(1+3M,4) (which is 3M/4) as its prediction. If you've heard of the [Bayes error rate](https://en.wikipedia.org/wiki/Bayes_error_rate) before, this is what we're running up against. There's nothing more to know about `true_value` from the `sample_*` variables than the mean of the three samples.
 
 Knowing all of this -- knowing both the optimal prediction and the amount of error that prediction is bound to have -- it's interesting to see what a regresson model does in practice.
 
@@ -93,11 +94,11 @@ plt.ylim(0,10)
 
 ![predictions](http://i.imgur.com/b0lMCQM.png)
 
-This (above) is what our predictions look like against the truth. Remember that the optimal prediction is the mode of the posterior distribution, Gamma(1+3M,4). This mode has a simple formula, it's just equal to 3M/4. So how close does our model get to this optimal prediction?
+This (above) is what our predictions look like against the truth. Remember that the optimal prediction is the mode of the posterior distribution, 3M/4. So how close does our model get to this optimal prediction?
 
 ![prediction](http://i.imgur.com/ZYli4GN.png)
 
-Deviations from the black line can be thought of as idiosyncratic error. The model is learning "noise" from the data set. It's interesting to dial down to a particular value of M and see what happens over time, where we'll see that the "noise" is learned out by the model over time. Let me show the image and then explain what it depicts:
+Not bad, but not perfect. Deviations from the black line can be thought of as idiosyncratic error. The model is learning "noise" from the data set. It's interesting to dial down to a particular value of M and see what happens over time, where we'll see that the "noise" is learned out by the model over time. Let me show the image first and then explain what it depicts:
 
 ![distro](http://i.imgur.com/OtSrehR.png)
 
@@ -106,7 +107,7 @@ model converges to the optimal prediction value over time.** This isn't surprisi
 
 # So What?
 
-At the end of the day, all this means is: If you know your response variable's distribution, then you have a predictive advantage over a "naive", "just throw the data into a random forest" approach. If you have lots of data, you might not care, but if you only have a little data, this is a huge help. As a rule of thumb, **look for simple statistical models when you don't have a lot of data**. When you have a lot of data, I'd certainly try "throw the data into a random forest" before thinking too much :-)
+At the end of the day, all this means is: If you know your response variable's distribution, then you have a predictive advantage over a "naive", "just throw the data into a random forest" approach. If you have lots of data, you might not care, but if you only have a little data, this can help. 
 
-Anecdotally, this accords with my own experience. When I was at Square, one side problem I worked on was labeling merchants as seasonal or not. However, there wasn't a large training set of seasonal merchants, so it would have taken some work to apply an out of the box regressor. Instead, I made some distributional assumptions about how sesonal merchants should have their payments distributed across the calendar year, and took a posterior measure of Shannon entropy that I
+Anecdotally, this accords with my own experience. When I was at Square, one side problem I worked on was labeling merchants as seasonal -- people like fireworks vendors, christmas popup shops, tax accounts, etc. -- or not. However, there wasn't a large training set of seasonal merchants, so it would have taken some work to apply an out of the box regressor. Instead, I made some distributional assumptions about how sesonal merchants should have their payments distributed across the calendar year, and took a posterior measure of Shannon entropy that I
 thought would correlate well with seasonality. This seemed to work alright in practice, and was a nice way to jumpstart a "real" machine learning effort.
