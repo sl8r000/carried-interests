@@ -16,7 +16,7 @@ author:             "Slater"
 #    publisher:      1234
 
 # URL
-baseurl:            "/"
+baseurl:            "/carried-interests"
 #baseurl:            "" #For Root Domain
 permalink:          /:year/:month/:day/:title/
 
