@@ -1,0 +1,112 @@
+---
+title: Machine Learning and the Bayes Error Rate
+---
+
+I was introduced to the "[Newsvendor model](https://en.wikipedia.org/wiki/Newsvendor_model)" during a business school class today, which can be thought of as a problem in Bayesian statistics. (N.B., the "Price is Right" secton of Cam David-Pilson's [*Bayesian Methods for Hackers*](http://nbviewer.jupyter.org/github/CamDavidsonPilon/Probabilistic-Programming-and-Bayesian-Methods-for-Hackers/blob/master/Chapter5_LossFunctions/Chapter5.ipynb) is a fun and thorough read on loss functions in Bayesian models.) During class, I thought to myself that if it were my job to predict demand for newspapers, snow jackets, or whatever, then I'd probably have a simple machine learning regressor as my starting point rather than making distributional assumptions, as the Newsvendor model does. My next thought, though, was: **Of course, when you actually know the underlying distribution, then a Bayesian approach should perform better than "blind" ML.** Knowing the distribution gives you an predictive edge by constraining your search space substantially. This made me think a bit about how much prediction advantage is created by knowing the response variable's distribution.
+
+Here's another way to motivate the problem: Years ago, I remember watching a Khan Academy video in which Sal was teaching statistics. I don't remember the details exactly, but I think the setup was that Sal had some huge population of people, and he wanted to know the average hight. So he generated 30 samples, and then did the usual calculation for our mean estimate and our error. The sample mean, of course, was very close to the true mean, and Sal remarked **how amazing it was that
+we could get so close to the true average hight by just measuring 30 random people**. Another way of phrasing this amazement is: When you know that the height is normally distributed, you only need a few samples to get the mean. That's because so much information is contained in the fact that you know the true probability for heights is normal.
+
+In any case, this made me think about how to think about what ML models are doing in situations where we actually know the underlying distribution. This is as philosophical as this post is going to get; to go further, we need some code.
+
+# A Little Experiment
+
+Let's say that I have some data. There's a `y` variable that I want to predict, and a few `X` variables that I have as observations. Let's let `y` be Gamma(1,1) distributed, and for our `X` variables, let's say that generate 3 samples from a Poisson(`y`) distribution. and record all of them. What we want to do then, is predict `y` when given the three samples `X`. 
+
+```
+n = 100000
+y = np.random.gamma(1,1,size=n)
+X = []
+for i in range(3):
+    X.append(scipy.stats.poisson(lambdas).rvs())
+    
+df = pd.DataFrame({
+        'sample_0': X[0],
+        'sample_1': X[1],
+        'sample_3': X[2],
+        'true_value': y
+    })
+
+df.head()
+```
+
+|          | sample_0 | sample_1 | sample_3 | true_value |
+|----------|----------|----------|------------|----------------|
+| 0        | 0        | 0        | 0          | 1.14310378281  |
+| 1        | 1        | 2        | 1          | 0.361924518984 |
+| 2        | 5        | 5        | 2          | 0.411181978913 |
+| 3        | 0        | 0        | 0          | 1.97691641254  |
+| 4        | 3        | 1        | 3          | 0.306383889779 |
+
+So, in a typical regression scenario, we'd train using the `sample_*` variables as our predictors and the `true_value` variable as the thing we're trying to predict.
+
+But the catch in this case is that in this case, we have statistics on our side too. We know that `true_value` came from a Gamma(1,1) distribution. This means that we **know** what the best estimator for `true_value` is already. That is, **the best thing our ML model can do is learn to take the average of the three samples**.
+
+Not only that, though: **We also have a lower bound on the error our model is bound to make**. Specifically, let M be the mean of our three samples. Then the distribution for `true_value` is Gamma(1+3xM, 4). (We know this because of a [conjugate prior](https://en.wikipedia.org/wiki/Conjugate_prior) relationship.) Here's a little code to show that: We'll take all the rows where the samples sum to 10, and show that the `true_value` variable has to follow a Gamma(11, 4) distribution. (Scipy uses a different convention, so you'll see Gamma(11, 1/4) below.)
+
+```
+sns.kdeplot(np.array(df[df.sample_0 + df.sample_1 + df.sample_2 == 10].true_value))
+x = np.linspace(0, 25, 10000)
+y = scipy.stats.gamma(11, scale=1.0/4).pdf(x)
+plt.plot(x,y)
+```
+![distro](http://i.imgur.com/sKpalIi.png)
+
+All of this is really interesting, because it means that our posterior distribution is the best we can do: **A perfect regression model can do no better than return the mode of Gamma(1+3M,4) (which is 3M/4) as its prediction.** If you've heard of the [Bayes error rate](https://en.wikipedia.org/wiki/Bayes_error_rate) before, this is what we're running up against. There's nothing more to know about `true_value` from the `sample_*` variables than the mean of the three samples; that's the best we can do. 
+
+Knowing all of this -- knowing both the optimal prediction and the amount of error that prediction is bound to have -- it's interesting to see what a regresson model does in practice.
+
+Let's see how a random forest regressor does. We'll feed it 100 data points, 1000 data points, 10,000 data points, and see how performance varies over time.
+
+```
+for color_index, n in enumerate([10000, 1000, 100]):
+    y = np.random.gamma(1,1, size=n)
+    X = []
+    for i in range(3):
+        X.append(scipy.stats.poisson(y).rvs())
+
+    df = pd.DataFrame({
+            'sample_0': X[0],
+            'sample_1': X[1],
+            'sample_2': X[2],
+            'true_value': y
+        })
+
+    reg = RandomForestRegressor()
+
+    y = df.true_value
+    X = df[[c for c in df.columns if c != 'true_value']]
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.5)
+
+    reg.fit(X_train, y_train)
+    y_pred = reg.predict(X_test)
+    plt.scatter(y_test, y_pred, alpha=0.5, color=sns.color_palette()[color_index])
+    
+plt.legend(('n=10,000', 'n=1000', 'n=100'), loc=2)
+plt.xlabel('Truth')
+plt.ylabel('Prediction')
+plt.plot([0,10],[0,10], color='k')
+plt.xlim(0,10)
+plt.ylim(0,10)
+```
+
+![predictions](http://i.imgur.com/b0lMCQM.png)
+
+This (above) is what our predictions look like against the truth. Remember that the optimal prediction is the mode of the posterior distribution, Gamma(1+3M,4). This mode has a simple formula, it's just equal to 3M/4. So how close does our model get to this optimal prediction?
+
+![prediction](http://i.imgur.com/ZYli4GN.png)
+
+Deviations from the black line can be thought of as idiosyncratic error. The model is learning "noise" from the data set. It's interesting to dial down to a particular value of M and see what happens over time, where we'll see that the "noise" is learned out by the model over time. Let me show the image and then explain what it depicts:
+
+![distro](http://i.imgur.com/OtSrehR.png)
+
+What we're looking at here is the distribution of model predictions across those rows in our data set where `sample_*` adds up to 6. The optimal prediction for this sample is 7/4 = 1.75, which is the black line. The red line shows the distribution of predictions for a model trained on 500 data points (and tested on 500 data points). The green line shows training on 5000 and testing on 5000, and the blue line shows training on 5,000 and testing on 5,000. **As you can see, the
+model converges to the optimal prediction value over time.** This isn't surprising, it's what we would expect / hope. In fact, if you remember the theory behind regular least square regression, you know this optimality is provable for linear models under some distributional assumptions. The only difference here is that we're using random forests for a slightly different problem.
+
+# So What?
+
+At the end of the day, all this means is: If you know your response variable's distribution, then you have a predictive advantage over a "naive", "just throw the data into a random forest" approach. If you have lots of data, you might not care, but if you only have a little data, this is a huge help. As a rule of thumb, **look for simple statistical models when you don't have a lot of data**. When you have a lot of data, I'd certainly try "throw the data into a random forest" before thinking too much :-)
+
+Anecdotally, this accords with my own experience. When I was at Square, one side problem I worked on was labeling merchants as seasonal or not. However, there wasn't a large training set of seasonal merchants, so it would have taken some work to apply an out of the box regressor. Instead, I made some distributional assumptions about how sesonal merchants should have their payments distributed across the calendar year, and took a posterior measure of Shannon entropy that I
+thought would correlate well with seasonality. This seemed to work alright in practice, and was a nice way to jumpstart a "real" machine learning effort.
