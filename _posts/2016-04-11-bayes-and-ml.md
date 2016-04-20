@@ -1,14 +1,14 @@
 ---
-title: Machine Learning and the Bayes Error Rate
+title: The Newsvendor Model and the Bayes Error Rate
 ---
 
-I was introduced to the "[Newsvendor model](https://en.wikipedia.org/wiki/Newsvendor_model)" during a business school class today, which can be thought of as the solution to a problem in Bayesian statistics. (N.B., the "Price is Right" secton of Cam David-Pilson's [*Bayesian Methods for Hackers*](http://nbviewer.jupyter.org/github/CamDavidsonPilon/Probabilistic-Programming-and-Bayesian-Methods-for-Hackers/blob/master/Chapter5_LossFunctions/Chapter5.ipynb) is a fun and thorough read on loss functions in Bayesian models.)
+I was introduced to the "[Newsvendor model](https://en.wikipedia.org/wiki/Newsvendor_model)" during a business school class today, which can be thought of as the solution to a problem in Bayesian statistics. During class, though, I found myself thinking that if it were my job to predict demand for newspapers, snow jackets, or whatever, then my starting point would probably be a using a simple machine learning regressor, not a statistical model that requires making some distributional assumptions (as the Newsvendor model does).
 
-During class, though, I found myself thinking that if it were my job to predict demand for newspapers, snow jackets, or whatever, then my starting point would probably be a using a simple machine learning regressor, not a statistical model that requires making some distributional assumptions (as the Newsvendor model does). But then I thought: **Of course, if you did actually know the underlying distribution, then a Bayesian approach might perform better than "blind" ML.** Knowing the distribution gives you an predictive edge by constraining your search space substantially. This made me think a bit about how much prediction advantage is created by knowing the response variable's distribution.
+But then I thought: **On the other hand, if you did actually know the underlying distribution, then a Bayesian approach might perform better than "blind" ML.** Knowing the distribution gives you an predictive edge by constraining your search space substantially. This made me think a bit about how much prediction advantage is created by knowing the response variable's distribution.
 
-In any case, this made me think about how to think about what ML models are doing in situations where we actually know the underlying distribution. This is sort of philosophical without details to back it up, so let's write a little code.
+In any case, this made me think about how to think about what ML models are doing in situations where we actually know the underlying distribution. We can see a demo of this with a little code.
 
-# A Little Experiment
+# Thought Experiment
 
 Let's say that I have some data. There's a `y` variable that I want to predict, and a few `X` variables that I have as observations. Let's let `y` be Gamma(1,1) distributed, and for our `X` variables, let's say that generate 3 samples from a Poisson(`y`) distribution. and record all of them. What we want to do then, is predict `y` when given the three samples `X`. 
 
@@ -41,7 +41,6 @@ So, in a typical regression scenario, we'd train using the `sample_*` variables 
 
 But the catch in this case is that in this case, we have statistics on our side too. We know that `true_value` came from a Gamma(1,1) distribution. This means that we **know** what the best estimator for `true_value` is already. Specifically, let M be the mean of our three samples. Then the distribution for `true_value` is Gamma(1+3M, 4). (We know this because of a [conjugate prior](https://en.wikipedia.org/wiki/Conjugate_prior) relationship.) So the best thing our ML model could do is
 predict the mode of Gamma(1+3M, 4), which is just 3M/4. Let's say that again: **the best thing our ML model can do is learn to take the average of the three samples, and multiply it by 3/4**.
-
 
 Here's a little code, by the way, to see that Gamma(1+3M,4) is our posterior: We'll take all the rows where the samples sum to 10, and show that the `true_value` variable has to follow a Gamma(11, 4) distribution. (Scipy uses a different convention, so you'll see Gamma(11, 1/4) below.)
 
@@ -109,5 +108,4 @@ model converges to the optimal prediction value over time.** This isn't surprisi
 
 At the end of the day, all this means is: If you know your response variable's distribution, then you have a predictive advantage over a "naive", "just throw the data into a random forest" approach. If you have lots of data, you might not care, but if you only have a little data, this can help. 
 
-Anecdotally, this accords with my own experience. When I was at Square, one side problem I worked on was labeling merchants as seasonal -- people like fireworks vendors, christmas popup shops, tax accounts, etc. -- or not. However, there wasn't a large training set of seasonal merchants, so it would have taken some work to apply an out of the box regressor. Instead, I made some distributional assumptions about how sesonal merchants should have their payments distributed across the calendar year, and took a posterior measure of Shannon entropy that I
-thought would correlate well with seasonality. This seemed to work alright in practice, and was a nice way to jumpstart a "real" machine learning effort.
+Anecdotally, this accords with my own experience. When I was at Square, one side problem I worked on was labeling merchants as seasonal -- people like fireworks vendors, christmas popup shops, tax accounts, etc. -- or not. However, there wasn't a large training set of seasonal merchants, so it would have taken some work to apply an out of the box regressor. Instead, I made some distributional assumptions about how sesonal merchants should have their payments distributed across the calendar year, and took a posterior measure of Shannon entropy that I thought would correlate well with seasonality. This seemed to work alright in practice, and was a nice way to jumpstart a "real" machine learning effort.
