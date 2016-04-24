@@ -10,8 +10,8 @@ I've been reading Feld and Mendelson's excellent *Ventures Deals* book, and was 
 
 Brad and Feld have an illustrative example for a startup that raises $50M and which investors own 60% of (so a $83.3M post-money valuation). If the startup is acquired for $100M, then:
 
-1. If the investors have a 1x preference and no participation, they will receive 60% or $60M in this case.
-2. If the investors have a 1x preference and full participation, they will receive their $50M back and will then receive 60% of the remainder (i.e. 60% of $50M). In total, they'll receive $80M.
+1. If the investors have a 1x preference and no participation, they will receive 60% or **$60M** in this case.
+2. If the investors have a 1x preference and full participation, they will receive their $50M back and will then receive 60% of the remainder (i.e. 60% of $50M). In total, they'll receive **$80M**.
 
 Sometimes term sheets are negotiated in which there's a cap to stock participation; if the startup exits below this cap, participation occurs, and if it exits above this cap, it does not.
 
