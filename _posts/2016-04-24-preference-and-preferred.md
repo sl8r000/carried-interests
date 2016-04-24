@@ -19,7 +19,7 @@ For me, it's interesting to think about all this for a range of outcomes. What d
 
 ![participation](http://i.imgur.com/Od8w3pV.png)
 
-There are three interesting points here:
+I take away two things from this:
 
 1. For large exits (in the sense that the exit valuation is much higher than the investment valuation), the percentage-wise impact of stock participation converges to zero like 1/x. However, it still makes a substantial dollar-value difference (see the chart on the left).
 2. Participation rights matter much more at small exits, where they can substantially change the economics of the deal.
