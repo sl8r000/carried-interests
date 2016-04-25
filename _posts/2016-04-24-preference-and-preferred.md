@@ -29,3 +29,5 @@ I think participation rights can make sense depending on the circumstances. If, 
 ![pre-post](http://i.imgur.com/HekoZ9D.png)
 
 On the other hand, irresponsible participation rights could really harm the economics of the business for the founder. I think the lesson is: It's important to think about how liquidation preferences and participation rights affect the deal, and to make sure the outcomes at different exit valuations are fully understood.
+
+Further reading: Andy Rachleff has an [interesting post](https://blog.wealthfront.com/wildly-different-financial-outcomes-employees-acquisitions/) about what all this looks like in practice under different common exit scenarios.
