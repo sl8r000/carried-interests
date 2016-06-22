@@ -12,7 +12,7 @@ That's how "normal" carried interest works; carry is paid at the fund level. Dea
 
 Let's say our VC firm, with its $100m fund, deploys its cash by investing $5m each in 20 companies. 18 of those companies go bust (go to zero), one of them makes a modest return and sells for $10m, and one of them is sold for $290m. As above, the fund carry in this case is 20% x ($300m - $100m) = $40m. But for **deal carry**, the one company that sold for $300m would generate 20% x ($300m - $5m) = $59m in carried interest. The company that sold for $10m would genrate 20% x ($10m - $5m) = $1m. All the companies that went to zero don't factor in. And all told, the deal carry investor made $60m in carried interest and the fund carry investor made $40m.
 
-(For more examples: As is often the case with subjects like this, Fred Wilson has already written a [great post](http://avc.com/2010/08/what-is-a-venture-partner-and-does-it-matter-to-you/).)
+(For more examples: As is often the case with subjects like this, Fred Wilson has already written a [great post](http://avc.com/2016/02/fund-level-vs-deal-by-deal-carry/).)
 
 ## What does Deal Carry Incentivize?
 
