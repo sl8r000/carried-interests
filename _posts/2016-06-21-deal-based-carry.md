@@ -2,7 +2,7 @@
 title: "Deal Carry"
 ---
 
-I learned the other day that AngelList syndicates earn deal carry, a particular type of carried interest that pays out at the **deal level** rather than the **fund level**. To my mind, deal carry is extremely intersting for statistical reasons: selection bias is baked into the compensation scheme, making it rational for fund managers to seek large variance in individual investment returns. Here's why:
+I learned the other day that AngelList syndicates [earn deal carry](https://angel.co/economics-syndicates), a particular type of carried interest that pays out at the **deal level** rather than the **fund level**. To my mind, deal carry is extremely intersting for statistical reasons: selection bias is baked into the compensation scheme, making it rational for fund managers to seek large variance in individual investment returns. Here's why:
 
 ## What is Deal Carry?
 
