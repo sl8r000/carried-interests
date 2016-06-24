@@ -2,7 +2,7 @@
 title: "Deal Carry"
 ---
 
-I learned the other day that seed stage syndicates often [earn deal carry](https://angel.co/economics-syndicates), a particular type of carried interest that pays out at the **deal level** rather than the **fund level**. This makes sense, since there isn't a persistent "fund" for a syndicate, so deal carry is a pragmatic solution. But to my mind, deal carry is extremely intersting for statistical reasons: there's a selection bias to the payout curve, creating an incentive to take large risk, even at a negative expected ROI. Here's why:
+I learned the other day that angel/seed stage syndicates often earn "deal carry", a particular type of carried interest that pays out at the **deal level** rather than the **fund level**. This makes sense, since there isn't a persistent "fund" for a syndicate, so deal carry is a pragmatic solution. But to my mind, deal carry is extremely intersting for statistical reasons: there's a selection bias to the payout curve, creating an incentive to take large risk, even at a negative expected ROI. Here's why:
 
 ## What is Deal Carry?
 
