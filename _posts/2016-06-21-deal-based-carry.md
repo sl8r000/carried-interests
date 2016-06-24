@@ -2,11 +2,11 @@
 title: "Deal Carry"
 ---
 
-I learned the other day that angel/seed stage syndicates often earn "deal carry", a particular type of carried interest that pays out at the **deal level** rather than the **fund level**. This makes sense, since there isn't a persistent "fund" for a syndicate, so deal carry is a pragmatic solution. But to my mind, deal carry is extremely intersting for statistical reasons: there's a selection bias to the payout curve, creating an incentive to take large risk, even at a negative expected ROI. Here's why:
+I learned the other day that angel/seed stage syndicates often earn "deal carry", a particular type of carried interest that pays out at the **deal level** rather than the **fund level**. This makes sense, since there isn't a persistent "fund" for a syndicate, so deal carry is a pragmatic solution. But to my mind, deal carry is extremely intersting for statistical reasons: there's a selection bias to the payout curve, creating an incentive to take on more risk. Here's why:
 
 ## What is Deal Carry?
 
-Hedge funds, VCs, and private equity firms all earn carried interest in the investments they make, usually at the 20% level. For example: If a VC firm raises $100m, invests it, and later receives (through IPOs, M&A, etc.) $300m back, then the firm has created a profit of $200m. The VC firm keeps 20% of this profit as carried interest; in this case, the firm would get $40m. This is a bit oversimplified because their are things like hurdle rates, high water marks, paybacks for deal fees, etc. But this is the rough picture.
+Hedge funds, VCs, and private equity firms all earn carried interest in the investments they make, usually at the 20% level. For example: If a VC firm raises $100m, invests it, and later receives (through IPOs, M&A, etc.) $300m back, then the firm has created a profit of $200m. The VC firm keeps 20% of this profit as carried interest; in this case, the firm would get $40m. This is a bit oversimplified because their are things like hurdle rates, high water marks, paybacks for deal fees, etc., but this is roughly how it goes.
 
 That's how "normal" carried interest works; carry is paid at the fund level. Deal carry, in contrast, is paid out on a deal-by-deal basis. This means that deal carry doesn't require the investor to "pay" for his or her losing investments. The difference is easiest to explain via example.
 
