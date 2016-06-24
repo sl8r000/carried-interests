@@ -26,7 +26,7 @@ This bias towards risk is true of "normal" carry too, by the way; but rather tha
 
 ## Tempered Response
 
-Of course, an investment vehicle can't blatently maximize its carry at the expense of its investors (limited partners). Reputation and trust are extremely important in the investing world, and openly exploiting the people who invest in a fund would, of course, destroy the reputation of the fund managers.
+Of course, an investment vehicle can't blatently maximize its carry at the expense of its investors (limited partners). Reputation and trust, not to mention fiduciary duty, are extremely important in the investing world, and openly exploiting the people who invest in a fund would destroy the reputation of the fund managers.
 
 At the same time, incentives steer behavior, so it's worth thinking about the incentives that deal carry creates. I think this is particularly true when angel/seed deals are syndicated from a large number of individual investors writing small checks, in which case the LPs are less equipped to police the reputations of their syndicates' managers and probably less familiar with the economics of carried interest.
 
