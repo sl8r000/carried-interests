@@ -2,7 +2,7 @@
 title: "Deal Carry"
 ---
 
-I learned the other day that angel/seed stage syndicates often earn "deal carry", a particular type of carried interest that pays out at the **deal level** rather than the **fund level**. This makes sense, since there isn't a persistent "fund" for a syndicate, so deal carry is a pragmatic solution. But to my mind, deal carry is extremely intersting for statistical reasons: there's a selection bias to the payout curve, creating an incentive to take on more risk. Here's why:
+I learned the other day that angel/seed stage syndicates often earn "deal carry", a particular type of carried interest that pays out at the deal level rather than the fund level. This makes sense, since there isn't a persistent "fund" for a syndicate, making deal carry a pragmatic solution. To me, deal carry is fascinating for a statistical reason: deal carry exhibits selection bias in returns, and thus has the potential to incentivize volatility-seeking for syndicate managers. Here's why:
 
 ## What is Deal Carry?
 
@@ -16,7 +16,7 @@ Let's say our VC firm, with its $100m fund, deploys its cash by investing $5m ea
 
 ## What does Deal Carry Incentivize?
 
-Deal carry incentivizes more extreme risk taking than does fund-level carry. To maximize payouts, the deal-carry-compensated manager should seek to maximize returns on his or her best deals, rather than on the aggregate portfolio. This means it could be more lucrative to put together a portfolio with a **lower** expected value as long as the variance is sufficiently higher. As an extreme example, let's say that you have $100m to manage. And let's say that on one hand, you have a strategy that very stably, very predictably, turns $100m into $120m over the lifetime of your management by investing in a single company. In that case, your carry would be 20% x ($120 - $100) = $4m. Now let's look at an alternative strategy; You make a hundred little investments of $1m each, each of which has a 99% chance of going to zero, and a 1% chance of returning 50x. The expected value of this portfolio is $50m, meaning that you're **destroying** $50m of capital on average. This is clearly way worse in expectation than your $100m to $120m strategy. But: If you're compensated with deal carry, then you'd actually earn 20% x ($50m - $1m) = $9.8m. You would come out with much more money by following the value-destroying strategy.
+Deal carry incentivizes more extreme risk taking than does fund-level carry. To maximize payouts, the deal-carry-compensated manager should seek deals that have a lot of upside, rather than focusing on aggregate ROI. This means it could be more lucrative to put together a portfolio with a **lower** expected value as long as the variance is sufficiently higher. As an extreme example, let's say that you have $100m to manage. And let's say that on one hand, you have a strategy that very stably, very predictably, turns $100m into $120m over the lifetime of your management by investing in a single company. In that case, your carry would be 20% x ($120 - $100) = $4m. Now let's look at an alternative strategy; You make a hundred little investments of $1m each, each of which has a 99% chance of going to zero, and a 1% chance of returning 50x. The expected value of this portfolio is $50m, meaning that you're **destroying** $50m of capital on average. This is clearly way worse in expectation than your $100m to $120m strategy. But: If you're compensated with deal carry, then you'd actually earn 20% x ($50m - $1m) = $9.8m. You would come out with much more money by following the value-destroying strategy.
 
 A fun thought experiment here is to imagine what deal carry would look like for a hedge fund; you earn 20% on trades that go well, and lose nothing on trades that go south. In such a situation, you'd look for trades that have a lot of upside, without caring much about the downside.
 
@@ -24,7 +24,6 @@ Another interesting thought is think about the financial instrument whose payoff
 
 ## Tempered Response
 
-Of course, an investment vehicle can't blatently maximize its carry at the expense of its investors (limited partners). Reputation and trust, not to mention fiduciary duty, are extremely important in the investing world, and openly exploiting the people who invest in a fund would destroy the reputation of the fund managers.
+Of course, a fund can't blatently maximize its carry at the expense of its investors (limited partners). Reputation and trust, not to mention fiduciary duty, are extremely important in the investing world, and openly exploiting the people who invest in a fund would destroy the reputation of the fund managers.
 
 At the same time, incentives steer behavior, so it's worth thinking about the incentives that deal carry creates. I think this is particularly true when angel/seed deals are syndicated from a large number of individual investors writing small checks, in which case the LPs are less equipped to police the reputations of their syndicates' managers and probably less familiar with the economics of carried interest.
-
