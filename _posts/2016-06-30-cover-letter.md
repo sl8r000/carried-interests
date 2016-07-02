@@ -8,7 +8,7 @@ Let me tell you about myself, and why I'm the perfect data engineer for startupl
 
 I'm a full stack developer, so I also have experience in designing higher level applications. I'm proud to say that whenever I build a new product, my coworkers have been quick to call it "**minimally viable**".
 
-At startuply.io, I'll relentlessly pursue the same results I've achieved elsewhere in the past. I guarantee that, once hired, I'll **move fast and break things** all throughout your organization; so fast, you wonder how it happened! I'm confident that the net result of all this will be massive **disruption** for your company.
+At startuply.io, I'll relentlessly pursue the same results I've achieved elsewhere in the past. I guarantee that, once hired, I'll **move fast and break things** all throughout your organization; so fast, it will be over before you can blink! I'm confident that the net result of all this will be massive **disruption** for your company.
 
 Cheers,
 
