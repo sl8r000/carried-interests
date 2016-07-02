@@ -4,7 +4,7 @@ title: Silicon Valley Cover Letter
 
 Hello,
 
-Let me tell you about myself, and why I'm the perfect data engineer for startuply.io. When it comes to managing large data flows, my motto has always been to **do things that don't scale**. As a result of following this motto uncompromisingly, I have an extensive track record of **failing fast**. And the consequences I achieve aren't limited to the technical layer, they the overall business strategy: Each of my previous employers has made a total **pivot** after seeing what I did to their original architecture.
+Let me tell you about myself, and why I'm the perfect data engineer for startuply.io. When it comes to managing large data flows, my motto has always been to **do things that don't scale**. As a result of following this motto uncompromisingly, I have an extensive track record of **failing fast**. And the consequences I cause aren't limited to the technical layer, oh no: they the overall business strategy. For example, each of my previous employers has made a total **pivot** after seeing what I did to their original architecture.
 
 I pride myself on being full stack developer, so naturally I also have experience in designing higher level applications. I'm proud to say that whenever I build a new product, my coworkers have been quick to call it "**minimally viable**".
 
