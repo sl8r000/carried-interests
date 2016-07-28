@@ -39,3 +39,5 @@ Nash claims that roughly 1/3 of Betterment's revenue comes from this $3-a-month 
 
 If you mix this, Betterment's making 52.5 bps or less on its AUM right now. So it would need about $19b to hit a $100m revenue run rate.
 
+Betterment CEO Jon Stein responded to Nash's criticism with his [own article](https://medium.com/@jonstein/betterment-sets-the-record-straight-d66deb96fad2#.3g3zbi8x3). The main data point to the above is that Stein claims that 10%, not 1/3, of Betterment's revenue comes from the $3-a-month fee. Under that number and the same assumptions as above, total revenue should be closer to $19.5m and the blended fees closer to 39bps. So Betterment would need about $25.6b in AUM to reach $100m ARR.
+
