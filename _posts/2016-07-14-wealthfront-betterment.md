@@ -18,6 +18,12 @@ The kind of growth needed is not impossible. Here's that Vanguard, the OG low-fe
 
 ![Vanguard](https://about.vanguard.com/img_files/who-we-are/remarkable-history/WWA_VAUM.png)
 
+And, as Wealthfront has pointed out, the chart for Charles Schwab shows great growth over time:
+
+![Schwab](https://blog.wealthfront.com/wp-content/uploads/2014/06/2014-06-03_SchwabAssetGrowth.jpg)
+
+To believe the profitability-through-growth plan, what you have to believe is that Wealthfront and Betterment will be able to quickly grow AUM in an LTV-efficient way. Less guardedly, I think that what you really need to believe is that Betterment & Wealthfront will grow exponentially, not linearly. And they might! Schwab and Vanguard did.
+
 # Small Account Monetization
 
 Aside from growth, another way to increase revenue is, of course, to charge more. This is a bit difficult for Betterment and Welathfront to do, since their brands are built on the idea of a low-fee alternative to traditional financial advisors. Still, some have argued that Betterment is already going this route. A while ago, Wealthfront CEO Adam Nash [criticized  Betterment](https://medium.com/@adamnash/it-s-time-to-kill-the-monthly-fee-for-small-accounts-51d37177bfe7#.xwtpu7nff) for its monthly fees. As of this writing, the way that Betterment's fees work for small accounts is:
